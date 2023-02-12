@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des pokemons - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Liste des pokemons</h1>
+    <hr>
+    <div class="row">
+        {% for pokemon in pokemons %}
+            <div class="col-3 mb-4">
+                <div class="card">
+                    <img src="{{ pokemon.image }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ pokemon.name|capitalize }}</h5>
+                        <p class="card-text">
+                            <b>Numéro</b> : {{ pokemon.number }}<br>
+                            <b>Type(s)</b> : {{ pokemon.types|join(', ') }}
+                        </p>
+                        <a class="btn btn-primary" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
+                            Voir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
