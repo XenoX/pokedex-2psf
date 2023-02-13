@@ -6,23 +6,27 @@
     <h1>Mon pokedex</h1>
     <hr>
     <div class="row">
-        {% for pokemon in pokemons %}
+        {% for pokedex in pokemons %}
             <div class="col-3 mb-4">
                 <div class="card">
-                    <img src="{{ pokemon.image }}" class="card-img-top" alt="" style="{{ not pokemon.captured ? 'filter: grayscale(100%);' }}">
+                    <img src="{{ pokedex.pokemon.image }}" class="card-img-top" alt="" style="{{ not pokedex.captured ? 'filter: grayscale(100%);' }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ pokemon.name|capitalize }}</h5>
+                        <h5 class="card-title">{{ pokedex.pokemon.name|capitalize }}</h5>
                         <p class="card-text">
-                            <b>Numéro</b> : {{ pokemon.number }}<br>
-                            <b>Type(s)</b> : {{ pokemon.types|join(', ') }}<br><br>
-                            {% if pokemon.captured %}
-                                <span class="text-muted">Capturé le {{ pokemon.capturedAt|date('d/m/y à H:i') }}<br>
+                            <b>Numéro</b> : {{ pokedex.pokemon.number }}<br>
+                            <b>Type(s)</b> :
+                            {% for type in pokedex.pokemon.types %}
+                                {{ type.name }}{{ not loop.last ? ', ' }}
+                            {% endfor %}
+                            <br><br>
+                            {% if pokedex.captured %}
+                                <span class="text-muted">Capturé le {{ pokedex.capturedAt|date('d/m/y à H:i') }}<br>
                             {% else %}
                                 <br>
                             {% endif %}
-                            <span class="text-muted">Vu le {{ pokemon.seenAt|date('d/m/y à H:i') }}
+                            <span class="text-muted">Vu le {{ pokedex.seenAt|date('d/m/y à H:i') }}
                         </p>
-                        <a class="btn btn-primary" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
+                        <a class="btn btn-primary" href="{{ path('app_pokemon_show', {'id': pokedex.pokemon.id}) }}">
                             Voir
                         </a>
                     </div>

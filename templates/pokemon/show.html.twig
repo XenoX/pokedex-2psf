@@ -13,7 +13,7 @@
                     <h5 class="card-title">{{ pokemon.name|capitalize }}</h5>
                     <p class="card-text">
                         <b>Numéro</b> : {{ pokemon.number }}<br>
-                        <b>Type(s)</b> : {{ pokemon.types|join(', ') }}
+                        <b>Type(s)</b> : {{ pokemon.types|column('name')|join(', ') }}
                     </p>
                 </div>
             </div>

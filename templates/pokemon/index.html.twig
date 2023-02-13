@@ -3,7 +3,7 @@
 {% block title %}Liste des pokemons - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des pokemons</h1>
+    <h1>Liste des pokemons</h1> <a class="btn btn-primary" href="{{ path('app_pokemon_create') }}">Créer un Raichu</a>
     <hr>
     <div class="row">
         {% for pokemon in pokemons %}
@@ -14,10 +14,17 @@
                         <h5 class="card-title">{{ pokemon.name|capitalize }}</h5>
                         <p class="card-text">
                             <b>Numéro</b> : {{ pokemon.number }}<br>
-                            <b>Type(s)</b> : {{ pokemon.types|join(', ') }}
+                            <b>Type(s)</b> :
+                            {% for type in pokemon.types %}
+                                {{ type.name }}{{ not loop.last ? ', ' }}
+                            {% endfor %}
+                            <br><br>
                         </p>
                         <a class="btn btn-primary" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
                             Voir
+                        </a>
+                        <a class="btn btn-danger" href="{{ path('app_pokemon_delete', {'id': pokemon.id}) }}">
+                            Supprimer
                         </a>
                     </div>
                 </div>
