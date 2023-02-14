@@ -3,7 +3,7 @@
 {% block title %}Liste des pokemons - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des pokemons</h1> <a class="btn btn-primary" href="{{ path('app_pokemon_create') }}">Créer un Raichu</a>
+    <h1>Liste des pokemons</h1> <a class="btn btn-primary" href="{{ path('app_pokemon_create') }}">Ajouter</a>
     <hr>
     <div class="row">
         {% for pokemon in pokemons %}
