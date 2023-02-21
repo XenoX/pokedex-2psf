@@ -6,6 +6,7 @@ use App\Repository\PokemonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
 class Pokemon
@@ -19,6 +20,11 @@ class Pokemon
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\Range(
+        notInRangeMessage: 'Le nombre doit être entre {{ min }} et {{ max }}',
+        min: 1,
+        max: 151,
+    )]
     private ?int $number = null;
 
     #[ORM\Column(length: 255)]

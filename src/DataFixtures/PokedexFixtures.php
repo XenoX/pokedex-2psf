@@ -43,7 +43,7 @@ class PokedexFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            TypeFixtures::class,
+//            TypeFixtures::class,
             PokemonFixtures::class,
         ];
     }

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ pokemon.id ? 'Modifier un Pokemon' : 'Nouveau pokemon' }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% if pokemon.id %}
+        <h1>Modification de "{{ pokemon.name }}"</h1>
+    {% else %}
+        <h1>Nouveau pokemon</h1>
+    {% endif %}
+    <hr>
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.number) }}
+        </div>
+    </div>
+    {{ form_row(form.image) }}
+    <span class="text-info">https://assets.pokemon.com/assets/cms2/img/pokedex/full/00X.png</span>
+    {{ form_rest(form) }}
+    <input type="submit" class="btn btn-primary">
+    {{ form_end(form) }}
+{% endblock %}

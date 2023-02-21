@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
+use App\Repository\PokedexRepository;
 use App\Repository\PokemonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,20 +23,29 @@ class PokemonController extends AbstractController
     }
 
     #[Route('/create', name: 'app_pokemon_create')]
-    public function create(Request $request, PokemonRepository $pokemonRepository): Response
+    #[Route('/update/{id}', name: 'app_pokemon_update')]
+    public function createOrUpdate(?Pokemon $pokemon, Request $request, PokemonRepository $pokemonRepository): Response
     {
-        $pokemon = new Pokemon();
+        $action = 'modifié';
+        if (null === $pokemon) {
+            $action = 'ajouté';
+            $pokemon = new Pokemon();
+        }
+
         $form = $this->createForm(PokemonType::class, $pokemon);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $pokemonRepository->save($pokemon, true);
 
+            $this->addFlash('success', 'Pokemon '.$action.' avec succès !');
+
             return $this->redirectToRoute('app_pokemon_index');
         }
 
-        return $this->render('pokemon/create.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('pokemon/createOrUpdate.html.twig', [
+            'form' => $form,
+            'pokemon' => $pokemon,
         ]);
     }
 
@@ -48,8 +58,12 @@ class PokemonController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'app_pokemon_delete')]
-    public function delete(Pokemon $pokemon, PokemonRepository $pokemonRepository): Response
+    public function delete(Pokemon $pokemon, PokemonRepository $pokemonRepository, PokedexRepository $pokedexRepository): Response
     {
+        $pokedexes = $pokedexRepository->findBy(['pokemon' => $pokemon]);
+        foreach ($pokedexes as $pokedex) {
+            $pokedexRepository->remove($pokedex, true);
+        }
         $pokemonRepository->remove($pokemon, true);
 
         return $this->redirectToRoute('app_pokemon_index');

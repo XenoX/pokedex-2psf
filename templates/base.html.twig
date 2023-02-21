@@ -24,12 +24,28 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('app_pokemon_index') }}">Pokemons</a>
                 </li>
+                {% if app.user %}
+                    <li class="nav-item ms-auto">
+                        <a class="nav-link" href="{{ path('app_security_logout') }}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item float-end">
+                        <a class="nav-link" href="{{ path('app_login_login') }}">Connexion</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
 <div id="main" class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
     {% block body %}{% endblock %}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
