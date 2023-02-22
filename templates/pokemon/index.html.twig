@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Liste des pokemons</h1>
-    <a class="btn btn-primary" href="{{ path('app_pokemon_create') }}">Créer</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-primary" href="{{ path('app_pokemon_create') }}">Créer</a>
+    {% endif %}
     <hr>
     <div class="row">
         {% for pokemon in pokemons %}
@@ -24,12 +26,14 @@
                         <a class="btn btn-primary" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
                             Voir
                         </a>
-                        <a class="btn btn-info" href="{{ path('app_pokemon_update', {'id': pokemon.id}) }}">
-                            Modifier
-                        </a>
-                        <a class="btn btn-danger" href="{{ path('app_pokemon_delete', {'id': pokemon.id}) }}">
-                            Supprimer
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="btn btn-info" href="{{ path('app_pokemon_update', {'id': pokemon.id}) }}">
+                                Modifier
+                            </a>
+                            <a class="btn btn-danger mt-2" href="{{ path('app_pokemon_delete', {'id': pokemon.id}) }}">
+                                Supprimer
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -5,8 +5,9 @@
 {% block body %}
     <h1>Mon pokedex</h1>
     <hr>
+    <a href="{{ path('app_pokedex_add') }}" class="btn btn-primary mb-3">Ajouter</a>
     <div class="row">
-        {% for pokedex in pokemons %}
+        {% for pokedex in pokedexes %}
             <div class="col-3 mb-4">
                 <div class="card">
                     <img src="{{ pokedex.pokemon.image }}" class="card-img-top" alt="" style="{{ not pokedex.captured ? 'filter: grayscale(100%);' }}">

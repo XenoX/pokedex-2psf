@@ -33,6 +33,11 @@ class Pokemon
     #[ORM\ManyToMany(targetEntity: Type::class, inversedBy: 'pokemons')]
     private Collection $types;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     public function __construct()
     {
         $this->types = new ArrayCollection();

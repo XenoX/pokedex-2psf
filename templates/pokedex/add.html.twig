@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un Pokemon dans le pokedex{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.pokemon) }}
+    {{ form_row(form.captured) }}
+    {{ form_row(form.capturedAt) }}
+    {{ form_errors(form) }}
+    <input type="submit" value="Ajouter" class="btn btn-primary mt-2">
+    {{ form_end(form) }}
+{% endblock %}

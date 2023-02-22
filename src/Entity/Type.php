@@ -26,6 +26,11 @@ class Type
     #[ORM\ManyToMany(targetEntity: Pokemon::class, mappedBy: 'types')]
     private Collection $pokemons;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     public function __construct()
     {
         $this->pokemons = new ArrayCollection();

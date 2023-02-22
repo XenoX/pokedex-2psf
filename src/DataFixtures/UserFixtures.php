@@ -29,6 +29,8 @@ class UserFixtures extends Fixture
                 ->setRoles($data[2])
             ;
 
+            $this->addReference($data[0], $user);
+
             $manager->persist($user);
         }
 
@@ -38,7 +40,7 @@ class UserFixtures extends Fixture
     private function getData(): array
     {
         return [
-            ['user', 'panda', ['ROLE_USER']],
+            ['user', 'panda', []],
             ['admin', 'panda', ['ROLE_ADMIN']],
         ];
     }
